@@ -12,6 +12,7 @@ import (
 	"os"
 	"strings"
 	"gonion_ring/model"
+	"flag"
 )
 
 func main() {
@@ -26,18 +27,13 @@ var sourceName string
 var outputName string
 
 func parseArguments() bool {
-	var fnCount = 0;
-	args := os.Args[1:]
-	for _, arg := range args {
-		if fnCount == 0 {
-			sourceName = arg
-			fnCount++
-		} else if fnCount == 1 {
-			outputName = arg
-			fnCount++
-		}
+	flag.Parse()
+	if flag.NArg() == 2 {
+		sourceName = flag.Arg(0)
+		outputName = flag.Arg(1)
+		return true
 	}
-	return fnCount == 2
+	return false
 }
 
 func printUsage() {
